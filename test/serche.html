@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<body>
+<div class="in">
+   <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="بحث..">
+   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sr"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+</div>
+<div class="re">
+   <div id="searchResults"></div>
+</div>
+
+<style>
+
+body{
+background-color: #e4e2e2;
+}
+*::-webkit-scrollbar {
+display: none;
+}
+.re{
+
+position: fixed;
+top: 147px;
+margin-left: 30%;
+overflow: auto;
+overflow-x: hidden;
+}
+#searchResults {
+display: none;
+background-color: #aaa;
+color: white;
+margin-top: 5px;
+width: 400px;
+
+
+}
+
+#searchResults div {
+padding: 10px;
+
+}
+
+#searchResults div:hover {
+background-color: #888;width: 380px;
+}
+input{
+position: fixed;
+top: 90px;
+padding: 10px;
+border-radius: 15px;
+outline: none;
+height: 35px;
+background-color: rgb(255, 255, 255) ;
+font-size: 30px;
+border: 0.5px solid aliceblue;
+
+width: 700px;
+box-shadow: 2px 2px 15px 0px rgba(0, 0, 0, 0.2);
+
+
+}
+.in{
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+.sr{
+position: fixed;
+top: 90px;
+margin-left: 650px;
+width: 50px;
+height: 50px;
+}
+.sond iframe{
+width: 700px;
+height: 700px;
+margin: -50px;
+
+}
+.sond{
+
+display: flex;
+flex-wrap: wrap;
+gap: 25px;
+
+align-items: center;
+justify-content: center;
+
+margin-top: 250px;
+}
+*::-webkit-scrollbar {
+display: none;
+}
+.etw iframe{
+width: 350px;
+height: 400px;
+}
+.etw{
+margin-top: 150px;
+
+display: flex;
+flex-wrap: wrap;
+gap: 30px;
+}
+
+</style>
+<script>
+let pages = [
+{ title: 'الرئيسية', url: 'http://localhost/prep/home.html' },
+{ title: 'استطلاع الرأي', url: 'http://localhost/prep/prsd/sond.html' },
+{ title: 'تقييمات', url: 'http://localhost/prep/etw/etw.html' },
+{ title: 'hashimi', url: 'http://localhost/prep/etw/etw.html#h1' },
+{ title: 'houceyne', url: 'http://localhost/prep/etw/etw.html#h2' },
+{ title: 'sidiya', url: 'http://localhost/prep/etw/etw.html#h3' },
+{ title: 'el ghadi', url: 'http://localhost/prep/etw/etw.html#h4' },
+{ title: 'Amanatoullah', url: 'http://localhost/prep/etw/etw.html#h5' },
+{ title: 'bouha', url: 'http://localhost/prep/etw/etw.html#h6' },
+{ title: 'Ibrahima', url: 'http://localhost/prep/etw/etw.html#h7' },
+{ title: 'Mohamed Abdalahi', url: 'http://localhost/prep/etw/etw.html#h8' },
+{ title: 'didi', url: 'http://localhost/prep/etw/etw.html#h9' },
+{ title: 'Fatimata', url: 'http://localhost/prep/etw/etw.html#h10' },
+{ title: 'Lemrabott', url: 'http://localhost/prep/etw/etw.html#h11' },
+{ title: 'Zerroug', url: 'http://localhost/prep/etw/etw.html#h12' },
+{ title: 'mactor', url: 'http://localhost/prep/etw/etw.html#h13' },
+{ title: 'Oumar Beyate', url: 'http://localhost/prep/etw/etw.html#h14' },
+{ title: 'Ramla', url: 'http://localhost/prep/etw/etw.html#h15' },
+{ title: 'Zeinebou', url: 'http://localhost/prep/etw/etw.html#h16' },
+{ title: 'Abdellahi El Wavi', url: 'http://localhost/prep/etw/etw.html#h17' },
+{ title: 'Biby', url: 'http://localhost/prep/etw/etw.html#h18' },
+{ title: 'Moussa', url: 'http://localhost/prep/etw/etw.html#h19' },
+{ title: 'S’Lemhoum', url: 'http://localhost/prep/etw/etw.html#h20' },
+{ title: 'الألعاب', url: 'http://localhost/prep/game/Menja/Menja.html' },
+
+{ title: 'vote', url: 'http://localhost/prep/prsd/sond.html#h1' },
+{ title: 'Agriculture and Food Security', url: 'http://localhost/prep/prsd/sond.html#h2' },
+{ title: 'Corruption and Transparency', url: 'http://localhost/prep/prsd/sond.html#h3' },
+{ title: 'Culture and Arts', url: 'http://localhost/prep/prsd/sond.html#h4' },
+{ title: 'Education and Schools', url: 'http://localhost/prep/prsd/sond.html#h5' },
+{ title: 'Energy and Water', url: 'http://localhost/prep/prsd/sond.html#h6' },
+{ title: 'Environment and Cleanliness', url: 'http://localhost/prep/prsd/sond.html#h7' },
+{ title: 'Government Services', url: 'http://localhost/prep/prsd/sond.html#h8' },
+{ title: 'Housing and Real Estate', url: 'http://localhost/prep/prsd/sond.html#h9' },
+{ title: 'ما رأيكم في الأستاذ', url: 'http://localhost/prep/prsd/sond.html#h10' },
+{ title: 'Infrastructure and Roads', url: 'http://localhost/prep/prsd/sond.html#h11' },
+{ title: 'Migration and Integration', url: 'http://localhost/prep/prsd/sond.html#h12' },
+{ title: 'Local Politics', url: 'http://localhost/prep/prsd/sond.html#h13' },
+{ title: 'Healthcare and Hospitals', url: 'http://localhost/prep/prsd/sond.html#h14' },
+{ title: 'Security and Police', url: 'http://localhost/prep/prsd/sond.html#h15' },
+{ title: 'Sports and Entertainment', url: 'http://localhost/prep/prsd/sond.html#h16' },
+{ title: 'Taxes and Fees', url: 'http://localhost/prep/prsd/sond.html#h17' },
+{ title: 'Public Transportation', url: 'http://localhost/prep/prsd/sond.html#h19' },
+{ title: 'Unemployment and Job Opportunities', url: 'http://localhost/prep/prsd/sond.html#h20' },
+
+];
+
+function searchFunction() {
+let input = document.getElementById('searchInput');
+let filter = input.value.toLowerCase();
+let results = document.getElementById('searchResults');
+results.style.display = 'block';
+results.innerHTML = '';
+
+for (let i = 0; i < pages.length; i++) {
+let title = pages[i].title;
+if (title.toLowerCase().indexOf(filter) > -1) {
+let div = document.createElement('div');
+div.innerHTML = title;
+div.onclick = function() {
+window.location.href = pages[i].url;
+
+}
+results.appendChild(div);
+}
+}
+}
+
+</script>
+<div class="sond">
+   <iframe src="http://localhost/prep/prsd/0pre.php" id="h1" frameborder="0" height="300" ></iframe>
+   <iframe src="http://localhost/prep/prsd/agri.php" id="h2" frameborder="0" height="300" ></iframe>
+   <iframe src="http://localhost/prep/prsd/corr.php" id="h3" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/cult.php" id="h4" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/edi.php" id="h5" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/ene.php" id="h6" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/govr.php" id="h7" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/hous.php" id="h8" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/index.php" id="h9" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/infr.php" id="h10" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/migr.php" id="h11" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/pol.php" id="h12" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/sante.php" id="h13" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/secr.php" id="h14" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/spor.php" id="h15" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/tax.php" id="h16" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/trans.php" id="h17" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/envir.php" id="h18" frameborder="0" height="300"></iframe>
+   <iframe src="http://localhost/prep/prsd/chom.php" id="h18" frameborder="0" height="300"></iframe>
+
+</div>
+<div class="etw">
+   <iframe src="http://localhost/prep/etw/da2i/hashimi.php" id="h1" frameborder="0"></iframe>
+   <iframe src="http://localhost/prep/etw/da2i/hos.php" id="h2" frameborder="0"></iframe>
+   <iframe src="http://localhost/prep/etw/da2i/sid.php" id="h3" frameborder="0"></iframe>
+   <iframe src="http://localhost/prep/etw/miage/9a8.php" id="h4" frameborder="0"></iframe>
+   <iframe src="http://localhost/prep/etw/miage/aman.php" id="h5" frameborder="0"></iframe>
+   <iframe src="http://localhost/prep/etw/miage/boha.php" id="h6" frameborder="0"></iframe>
+   <iframe src="http://localhost/prep/etw/miage/ibra.php" id="h7" frameborder="0"></iframe>
+   <iframe src="http://localhost/prep/etw/da2i/abd.php" id="h8" frameborder="0"></iframe>
+</div>
+</body>
+</html>

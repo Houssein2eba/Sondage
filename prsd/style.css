@@ -1,0 +1,19 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    padding: 0;
+    margin: 0;
+}
+iframe{
+    width: 700px;
+    height: 700px;
+    margin: auto;
+   
+    margin-bottom: -130px;
+}
+.sond{
+    position: relative;
+    top: 150px;
+}

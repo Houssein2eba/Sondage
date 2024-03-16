@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Matriculation</title>
+    <style>
+    .cont{
+    width: 50%;
+    border: black 1px solid;
+    border-radius: 12px;
+    padding: 20px 12px ;
+    color: black;
+
+
+}
+label{
+  margin-left: 10px;
+  font-size: larger;
+}
+legend{
+  border: 1px black solid;
+  padding: 3px 20px;
+  border-radius: 4px;
+}
+input{
+    width: 60%;
+    padding: 6px 4px;
+    margin: 4px 10px;
+    border: black 1px solid;
+    border-radius: 6px;
+    display: inline;
+}
+select{
+    padding: 6px 4px;
+    margin: 4px 10px;
+    border: black 1px solid;
+    border-radius: 6px;
+    
+}
+.submit{
+    margin: 10px;
+    padding: 10px 20px;
+    border: 1px grey solid;
+    border-radius: 4px;
+}
+#result {
+        margin-top: 20px;
+        color: green;
+      }
+
+      #error {
+        margin-top: 20px;
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <fieldset class="cont">
+      <legend>Chemps Du Verification</legend>
+      <center><h3>Verification Du Numero</h3></center>
+      <form action="" method="get" id="form">
+        <div class="form-group">
+          <label for="mat">Numero</label>
+          <select >
+            <option>00222</option>
+          </select>
+          <input
+            type="number"
+            class="form-control"
+            id="mat"
+            placeholder="Veillez Entrer Un Numero"
+          />
+        </div>
+        <div class="form-group">
+          <p class="p-1" id="message"></p>
+        </div>
+        <center><button onclick="chekMatricule()" class="submit">
+          Verifier
+        </button></center>
+      </form>
+      <div id="result"></div>
+      <div id="error"></div>
+    
+    <script>
+      var number;
+      function chekMatricule() {
+        document.getElementById("form").onsubmit = (e) => {
+          e.preventDefault();
+        };
+
+        let re = /^((2|3|4)\d{7})$/;
+        let matricule = document.getElementById("mat").value;
+        let message = document.getElementById("message");
+        if (matricule.match(re)) {
+          let last2 = matricule.slice(0,1);
+          switch (last2) {
+            case "3":
+              number = "MATTEL";
+              break;
+            case "2":
+              number = "CHINGUITEL";
+              break;
+            case "4":
+                number="MAURITEL"
+          }
+          document.getElementById("result").innerText ="CE NUMERO APPARTIENT A "+number;
+          document.getElementById("error").innerText = "";
+        } else {
+          document.getElementById("result").innerText = "";
+          document.getElementById("error").innerText =
+            "CE NUMERO N'EST PAS MAURITANIEN.";
+        }
+      }
+    </script>
+    </fieldset>
+  </body>
+</html>

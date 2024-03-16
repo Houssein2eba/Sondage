@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+     margin: 0;
+    padding: 0;
+    background-color: #ffffff;}
+iframe{
+    width: 350px;
+    height: 400px;
+}
+.etw{
+    margin-top: 150px;
+    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+  *::-webkit-scrollbar {
+    display: none;
+}
